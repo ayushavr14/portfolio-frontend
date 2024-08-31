@@ -1,12 +1,26 @@
-import { Button, Flex, Form, Input } from "antd";
+import { Button, Flex, Form, Input, message } from "antd";
 import Wrapper from "../Wrapper";
 import { LoginT } from "@/lib/types";
+import axiosInstance from "@/axios/instance";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginT) => {
-    console.log(data);
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post("/api/auth/login", data);
+      navigate("/add-project");
+      message.success(res.data.msg);
+    } catch (error: any) {
+      message.error(error.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Wrapper>
@@ -54,8 +68,8 @@ const Login = () => {
                 <Button
                   htmlType="submit"
                   type="primary"
-                  //   loading={loginLoading}
-                  //   disabled={loginLoading}
+                  loading={isLoading}
+                  disabled={isLoading}
                   block
                   className="h-10 font-semibold bg-[#9747FF] "
                 >

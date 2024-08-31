@@ -2,17 +2,22 @@ import { ExperienceT } from "@/lib/types";
 import { Button, Form, Input, message } from "antd";
 import Wrapper from "../Wrapper";
 import axiosInstance from "@/axios/instance";
+import { useState } from "react";
 
 const AddExperience = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   const onSubmit = async (data: ExperienceT) => {
     try {
+      setIsLoading(true);
       await axiosInstance.post("/api/experiences", data);
       message.success("Skills added successfully");
       form.resetFields();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,8 +87,8 @@ const AddExperience = () => {
               <Button
                 htmlType="submit"
                 type="primary"
-                //   loading={loginLoading}
-                //   disabled={loginLoading}
+                loading={isLoading}
+                disabled={isLoading}
                 block
                 className="h-10 font-semibold bg-[#9747FF] "
               >

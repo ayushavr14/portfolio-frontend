@@ -4,34 +4,12 @@ import Wrapper from "../Wrapper";
 import axiosInstance from "@/axios/instance";
 import { useState } from "react";
 
-const AddSkills = () => {
+const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [form] = Form.useForm();
-
-  const onSubmit = async (data: SkillsT) => {
-    try {
-      setIsLoading(true);
-      const skillsArray = data.name
-        .split(",")
-        .map((skill: string) => skill.trim())
-        .filter((skill: string) => skill);
-
-      const sendData = {
-        name: skillsArray,
-      };
-
-      await axiosInstance.post("/api/skills", sendData);
-
-      message.success("Skills added successfully");
-
-      form.resetFields();
-    } catch (error) {
-      console.error("Error adding skills:", error);
-      message.error("Failed to add skills");
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
+  const [form] = Form.useForm();
   return (
     <Wrapper>
       <div className="w-full min-h-screen bg-gray-900 px-10 py-5 rounded-lg">
@@ -75,4 +53,4 @@ const AddSkills = () => {
   );
 };
 
-export default AddSkills;
+export default Profile;

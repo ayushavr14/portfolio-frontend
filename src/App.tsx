@@ -6,6 +6,7 @@ import AdminLayout from "./layout/admin-layout";
 import RootLayout from "./layout/layout";
 import AddSkills from "./components/admin/add-skills";
 import AddExperience from "./components/admin/add-experience";
+import AdminPanel from "./pages/admin-panel";
 
 const App = () => {
   useEffect(() => {
@@ -17,7 +18,7 @@ const App = () => {
         <Route path="/" element={<RootLayout />} />
         <Route element={<AdminLayout />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/add-project" element={<AddProject />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/add-skills" element={<AddSkills />} />
           <Route path="/add-experience" element={<AddExperience />} />
         </Route>

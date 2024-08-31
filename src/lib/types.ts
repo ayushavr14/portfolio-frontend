@@ -8,6 +8,7 @@ export type LoginT = {
 };
 
 export type ProjectT = {
+  _id: string;
   title: string;
   description: string;
   technologies: string[];
