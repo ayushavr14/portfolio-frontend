@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import AddProject from "./components/admin/add-project";
+import AddSkills from "./components/admin/add-skills";
 import Login from "./components/admin/login";
 import AdminLayout from "./layout/admin-layout";
 import RootLayout from "./layout/layout";
-import AddSkills from "./components/admin/add-skills";
-import AddExperience from "./components/admin/add-experience";
 import AdminPanel from "./pages/admin-panel";
+import ExperienceAdminView from "./components/admin/experience/experience-admin-view";
 
 const App = () => {
   useEffect(() => {
@@ -20,7 +19,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/add-skills" element={<AddSkills />} />
-          <Route path="/add-experience" element={<AddExperience />} />
+          <Route path="/admin-experience" element={<ExperienceAdminView />} />
         </Route>
       </Routes>
     </>
