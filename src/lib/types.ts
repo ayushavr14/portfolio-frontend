@@ -1,3 +1,40 @@
 import { links } from "./data";
 
 export type SectionName = (typeof links)[number]["name"];
+
+export type LoginT = {
+  email: string;
+  password: string;
+};
+
+export type ProjectT = {
+  title: string;
+  description: string;
+  technologies: string[];
+  demoLink: string;
+  sourceCodeLink: string;
+  image?: string[];
+  tag: string;
+  status: string;
+};
+
+export type FileTypeT = {
+  url?: string;
+  originFileObj?: File;
+};
+
+export type NormFileEventT = {
+  fileList: any[];
+};
+
+export type SkillsT = {
+  name: string;
+};
+
+export type ExperienceT = {
+  title: string;
+  company: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+};
