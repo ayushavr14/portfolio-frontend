@@ -1,34 +1,39 @@
-import { ExperienceT } from "@/lib/types";
 import { Button, Form, Input, message } from "antd";
-import Wrapper from "../Wrapper";
-import axiosInstance from "@/axios/instance";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Wrapper from "../../Wrapper";
+import { ExperienceT } from "@/lib/types";
 
-const AddExperience = () => {
-  const [isLoading, setIsLoading] = useState(false);
+type Props = {
+  isLoading: boolean;
+  initialData?: ExperienceT;
+  onSubmit: (data: ExperienceT) => Promise<void>;
+};
+
+const AddExperienceForm = ({ isLoading, onSubmit, initialData }: Props) => {
   const [form] = Form.useForm();
 
-  const onSubmit = async (data: ExperienceT) => {
-    try {
-      setIsLoading(true);
-      await axiosInstance.post("/api/experiences", data);
-      message.success("Skills added successfully");
-      form.resetFields();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const onFinish = (data: ExperienceT) => {
+    onSubmit(data);
   };
+
+  useEffect(() => {
+    if (initialData) {
+      form.setFieldsValue({
+        ...initialData,
+        startDate: initialData.startDate?.slice(0, 4),
+        endDate: initialData.endDate?.slice(0, 4),
+      });
+    }
+  }, []);
 
   return (
     <Wrapper>
-      <div className="w-full min-h-screen bg-gray-900 px-10 py-5 rounded-lg">
+      <div className="w-full min-h-screen px-10 py-5 rounded-lg">
         <h2 className="text-3xl text-white font-semibold">Add Experience</h2>
         <div className=" bg-card w-full">
           <Form
             form={form}
-            onFinish={onSubmit}
+            onFinish={onFinish}
             layout="vertical"
             className="label-right label-semibold label-mb-1 space-y-2 no-margin-item mt-5"
           >
@@ -73,6 +78,7 @@ const AddExperience = () => {
               rules={[
                 {
                   required: true,
+                  type: "date",
                 },
               ]}
             >
@@ -102,4 +108,4 @@ const AddExperience = () => {
   );
 };
 
-export default AddExperience;
+export default AddExperienceForm;

@@ -14,7 +14,7 @@ export type ProjectT = {
   technologies: string[];
   demoLink: string;
   sourceCodeLink: string;
-  image?: string[];
+  image: string[];
   tag: string;
   status: string;
 };
@@ -33,9 +33,10 @@ export type SkillsT = {
 };
 
 export type ExperienceT = {
+  _id: string;
   title: string;
   company: string;
   description: string;
-  startDate: Date;
+  startDate: Date | number;
   endDate: Date;
 };

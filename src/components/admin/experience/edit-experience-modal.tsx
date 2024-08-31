@@ -1,30 +1,27 @@
-import ProjectForm from "./project-form";
 import axiosInstance from "@/axios/instance";
-import { ProjectT } from "@/lib/types";
-import { Modal, message, Button } from "antd";
+import { ExperienceT } from "@/lib/types";
+import { Button, Modal, message } from "antd";
 
 import { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
+import AddExperienceForm from "./add-experience-form";
 
-const EditProjectModal = ({
+const EditExperienceModal = ({
   projectId,
   initialData,
 }: {
   projectId: string;
-  initialData: ProjectT;
+  initialData: ExperienceT;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (data: ExperienceT) => {
     try {
       setIsLoading(true);
       const res = await axiosInstance.patch(
-        `/api/projects/${projectId}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        `/api/experiences/${projectId}`,
+        data
       );
 
       message.success(res.data?.msg);
@@ -47,11 +44,11 @@ const EditProjectModal = ({
       <Modal
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
-        title="Edit Project"
+        title="Edit Experience"
         destroyOnClose
         footer={false}
       >
-        <ProjectForm
+        <AddExperienceForm
           isLoading={isLoading}
           onSubmit={handleSubmit}
           initialData={initialData}
@@ -61,4 +58,4 @@ const EditProjectModal = ({
   );
 };
 
-export default EditProjectModal;
+export default EditExperienceModal;

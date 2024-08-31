@@ -1,7 +1,7 @@
-import { Button, Form, Input, message, Select, Upload } from "antd";
 import { NormFileEventT, ProjectT } from "@/lib/types";
-import { AiOutlinePlus } from "react-icons/ai";
+import { Button, Form, Input, Select, Upload } from "antd";
 import { useEffect } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const normFile = (e: NormFileEventT) => {
   if (Array.isArray(e)) {
@@ -97,7 +97,12 @@ const ProjectForm = ({ isLoading, onSubmit, initialData }: Props) => {
           },
         ]}
       >
-        <Input placeholder="Description" className="h-10" />
+        <Input.TextArea
+          style={{ height: 120, resize: "none" }}
+          allowClear
+          placeholder="Description"
+          className="h-10"
+        />
       </Form.Item>
 
       <Form.Item

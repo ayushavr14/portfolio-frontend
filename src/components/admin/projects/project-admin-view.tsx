@@ -1,11 +1,12 @@
 import axiosInstance from "@/axios/instance";
 import { ProjectT } from "@/lib/types";
 import { useEffect, useState } from "react";
-import EditProjectModal from "./edit-project-modal";
 import AddProjectModal from "./add-project-modal";
+import EditProjectModal from "./edit-project-modal";
+import ProjectCard from "./ProjectCard";
+import DeleteProject from "./delete-project";
 
-type Props = {};
-const ProjectAdminView = (props: Props) => {
+const ProjectAdminView = () => {
   const [projects, setProjects] = useState<ProjectT[] | null>(null);
 
   useEffect(() => {
@@ -22,26 +23,19 @@ const ProjectAdminView = (props: Props) => {
   }, []);
 
   return (
-    <div className="h-screen mt-6">
+    <div className="mt-6">
       <AddProjectModal />
-      {projects?.map((project) => (
-        <div>
-          <h1 key={project._id} className="text-white">
-            {project.title}
-          </h1>
-          <EditProjectModal projectId={project._id} initialData={project} />
-        </div>
-      ))}
+      <div className="flex flex-wrap gap-6 p-2">
+        {projects?.map((item) => (
+          <div key={item._id} className="flex flex-wrap gap-6 p-6">
+            <ProjectCard project={item} />
+            <EditProjectModal projectId={item._id} initialData={item} />
+            <DeleteProject projectId={item._id} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default ProjectAdminView;
-/*
-render cards
-add edit modal in cards
-refetch project api
-
-<EditProjectModal initialData={project}/>
-
-*/
