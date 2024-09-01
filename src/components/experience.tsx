@@ -17,7 +17,6 @@ export interface ExperienceType {
   description: string;
   startDate: string;
   endDate: string;
-  // icon: JSX.Element;
 }
 
 export default function Experience() {
@@ -31,13 +30,20 @@ export default function Experience() {
         const response = await axiosInstance.get<ExperienceType[]>(
           "/api/experiences"
         );
-        setExperiencesData(response.data);
+        setExperiencesData(response?.data);
       } catch (error) {
         console.error("Error fetching experiences:", error);
       }
     };
 
     fetchExperiences();
+
+    socket.on("experience-created", (newExperience: ExperienceType) => {
+      setExperiencesData((prevExperiences) => [
+        newExperience,
+        ...prevExperiences,
+      ]);
+    });
 
     socket.on("experience-updated", (updatedExperience: ExperienceType) => {
       setExperiencesData((prevExperiences) =>
@@ -58,6 +64,7 @@ export default function Experience() {
     });
 
     return () => {
+      socket.off("experience-created");
       socket.off("experience-updated");
       socket.off("experience-deleted");
     };
@@ -67,7 +74,7 @@ export default function Experience() {
     <section id="experience" ref={ref} className="scroll-mt-28 mb-28 sm:mb-40">
       <SectionHeading>My experience</SectionHeading>
       <VerticalTimeline lineColor="">
-        {experiencesData.map((item) => (
+        {experiencesData?.map((item) => (
           <VerticalTimelineElement
             key={item._id}
             contentStyle={{
@@ -100,7 +107,7 @@ export default function Experience() {
             <p className="!mt-1 !font-normal text-gray-700 dark:text-white/75">
               {item.startDate.slice(0, 4)}
               {" - "}
-              {item.endDate.slice(0, 4) || "Present"}
+              {item.endDate?.slice(0, 4) || "Present"}
             </p>
           </VerticalTimelineElement>
         ))}
