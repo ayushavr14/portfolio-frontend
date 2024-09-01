@@ -8,7 +8,7 @@ export type LoginT = {
 };
 
 export type ProjectT = {
-  _id?: string;
+  _id: string;
   title: string;
   description: string;
   technologies: string[];
@@ -34,7 +34,7 @@ export type SkillsT = {
 };
 
 export type ExperienceT = {
-  _id?: string;
+  _id: string;
   title: string;
   company: string;
   description: string;

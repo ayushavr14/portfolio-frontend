@@ -26,7 +26,10 @@ const ExperienceAdminView = () => {
     fetchExperiences();
 
     socket.on("experience-created", (newExperience: ExperienceT) => {
-      setExperience((prevExperiences) => [newExperience, ...prevExperiences]);
+      setExperience((prevExperiences) => {
+        const experiencesArray = prevExperiences ?? [];
+        return [newExperience, ...experiencesArray];
+      });
     });
 
     socket.on("experience-updated", (updatedExperience: ExperienceT) => {
@@ -66,7 +69,7 @@ const ExperienceAdminView = () => {
                 {experience.length > 1 && (
                   <>
                     <EditExperienceModal
-                      projectId={item._id}
+                      projectId={item?._id}
                       initialData={item}
                     />
                     <DeleteExperience projectId={item._id} />

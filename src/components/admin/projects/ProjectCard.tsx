@@ -15,7 +15,9 @@ interface ProjectCardProps {
   project: Project;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  project,
+}: ProjectCardProps) => {
   return (
     <div className="max-w-md rounded overflow-hidden shadow-lg bg-white border border-gray-200 cursor-pointer w-[300px]">
       <img

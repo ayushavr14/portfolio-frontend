@@ -23,7 +23,10 @@ const ProjectAdminView = () => {
     fetchProjects();
 
     socket.on("project-created", (newProject: ProjectT) => {
-      setProjects((prevProjects) => [...prevProjects, newProject]);
+      setProjects((prevProjects) => {
+        const projectArray = prevProjects ?? [];
+        return [newProject, ...projectArray];
+      });
     });
 
     socket.on("project-updated", (updatedProject: ProjectT) => {
