@@ -95,7 +95,11 @@ const ProfileForm = ({ initialData }: { initialData: UserT }) => {
                 },
               ]}
             >
-              <Input placeholder="About" className="h-10" />
+              <Input.TextArea
+                style={{ height: 120, resize: "none" }}
+                allowClear
+                placeholder="About"
+              />
             </Form.Item>
 
             <Form.Item

@@ -42,6 +42,7 @@ const EditExperienceModal = ({
         <MdModeEdit size={28} className="text-green-500" />
       </Button>
       <Modal
+        width="800px"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         title="Edit Experience"

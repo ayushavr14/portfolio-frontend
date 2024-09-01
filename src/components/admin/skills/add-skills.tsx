@@ -21,7 +21,7 @@ const SkillsAdminView = () => {
 
   return (
     <div className="mt-6">
-      <div>
+      <div className="bg-gray-900">
         {skills?.map((item) => (
           <AddSkills skillsId={item?._id} initialData={item} />
         ))}

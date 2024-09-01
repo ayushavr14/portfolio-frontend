@@ -4,7 +4,7 @@ import axiosInstance from "@/axios/instance";
 import { UserT } from "@/lib/types";
 
 const AdminProfile = () => {
-  const [userDetails, setUserDetails] = useState<UserT[] | null>(null);
+  const [userDetails, setUserDetails] = useState<UserT[]>();
 
   useEffect(() => {
     const fetchUserDetails = async () => {

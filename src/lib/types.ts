@@ -8,15 +8,15 @@ export type LoginT = {
 };
 
 export type ProjectT = {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   technologies: string[];
   demoLink: string;
   sourceCodeLink: string;
   image: string[];
-  tag: string;
-  status: string;
+  tag?: string;
+  status?: string;
 };
 
 export type FileTypeT = {
@@ -34,7 +34,7 @@ export type SkillsT = {
 };
 
 export type ExperienceT = {
-  _id: string;
+  _id?: string;
   title: string;
   company: string;
   description: string;

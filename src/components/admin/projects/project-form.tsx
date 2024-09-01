@@ -46,7 +46,7 @@ const ProjectForm = ({ isLoading, onSubmit, initialData }: Props) => {
     if (image && image.length > 0) {
       image.forEach((file: any) => {
         if (file.url) {
-          formData.append("image[]", file.name);
+          formData.append("image_upload", file.name);
         } else {
           formData.append("image_upload", file.originFileObj);
         }

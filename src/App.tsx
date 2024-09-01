@@ -7,6 +7,7 @@ import AdminProfile from "./components/admin/user-details/admin-profile-edit";
 import AdminLayout from "./layout/admin-layout";
 import RootLayout from "./layout/layout";
 import AdminPanel from "./pages/admin-panel";
+import AntThemeProvider from "./providers/ant-theme-provider";
 
 const App = () => {
   useEffect(() => {
@@ -14,16 +15,18 @@ const App = () => {
   }, []);
   return (
     <>
-      <Routes>
-        <Route path="/" element={<RootLayout />} />
-        <Route element={<AdminLayout />}>
+      <AntThemeProvider>
+        <Routes>
+          <Route path="/" element={<RootLayout />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin-panel" element={<AdminPanel />} />
-          <Route path="/add-skills" element={<SkillsAdminView />} />
-          <Route path="/admin-experience" element={<ExperienceAdminView />} />
-          <Route path="/admin-user-details" element={<AdminProfile />} />
-        </Route>
-      </Routes>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin-project" element={<AdminPanel />} />
+            <Route path="/admin-skills" element={<SkillsAdminView />} />
+            <Route path="/admin-experience" element={<ExperienceAdminView />} />
+            <Route path="/admin-user-details" element={<AdminProfile />} />
+          </Route>
+        </Routes>
+      </AntThemeProvider>
     </>
   );
 };

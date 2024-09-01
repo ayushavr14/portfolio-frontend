@@ -32,6 +32,7 @@ const AddProjectModal = () => {
         Add Project
       </Button>
       <Modal
+        width="800px"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         title="Add Project"

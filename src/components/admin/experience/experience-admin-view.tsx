@@ -25,7 +25,7 @@ const ExperienceAdminView = () => {
   }, []);
 
   return (
-    <div className="mt-6 min-h-screen">
+    <div className="mt-6 min-h-screen p-2">
       <AddExperienceModal />
       <div className="flex flex-wrap gap-6 p-2">
         {experience?.map((item) => (

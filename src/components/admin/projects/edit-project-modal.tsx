@@ -19,15 +19,11 @@ const EditProjectModal = ({
   const handleSubmit = async (formData: FormData) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.patch(
-        `/api/projects/${projectId}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axiosInstance.patch(`/api/projects/${projectId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      message.success(res.data?.msg);
+      message.success("Project updated successfully");
     } catch (error) {
       console.error("Project addition failed:", error);
     } finally {
@@ -45,6 +41,7 @@ const EditProjectModal = ({
         <MdModeEdit size={28} className="text-green-500" />
       </Button>
       <Modal
+        width="800px"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         title="Edit Project"
