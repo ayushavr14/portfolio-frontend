@@ -38,7 +38,6 @@ export default function Intro() {
       );
     });
 
-    // Clean up the socket event listener on component unmount
     return () => {
       socket.off("user-updated");
     };
@@ -47,9 +46,8 @@ export default function Intro() {
   return (
     <>
       {userData?.map((item) => (
-        <>
+        <div key={item._id}>
           <section
-            key={item._id}
             ref={ref}
             id="home"
             className="mb-28 max-w-[50rem] text-center sm:mb-0 scroll-mt-[100rem]"
@@ -141,9 +139,11 @@ export default function Intro() {
               </a>
             </motion.div>
           </section>
-          <SectionDivider />
+          <div className="flex justify-center items-center">
+            <SectionDivider />
+          </div>
           <About about={item?.about} />
-        </>
+        </div>
       ))}
     </>
   );

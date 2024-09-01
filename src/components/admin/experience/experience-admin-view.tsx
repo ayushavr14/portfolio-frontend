@@ -6,22 +6,52 @@ import AddExperienceModal from "./add-experience-modal";
 import DeleteExperience from "./delete-experience";
 import EditExperienceModal from "./edit-experience-modal";
 import ExperienceCard from "./experience-card";
+import socket from "@/socket/socket";
 
 const ExperienceAdminView = () => {
   const [experience, setExperience] = useState<ExperienceT[] | null>(null);
-  console.log(experience);
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchExperiences = async () => {
       try {
-        const res = await axiosInstance.get("/api/experiences");
-        setExperience(res.data);
+        const response = await axiosInstance.get<ExperienceT[]>(
+          "/api/experiences"
+        );
+        setExperience(response?.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching experiences:", error);
       }
     };
 
-    fetchProjects();
+    fetchExperiences();
+
+    socket.on("experience-created", (newExperience: ExperienceT) => {
+      setExperience((prevExperiences) => [newExperience, ...prevExperiences]);
+    });
+
+    socket.on("experience-updated", (updatedExperience: ExperienceT) => {
+      setExperience((prevExperiences: any) =>
+        prevExperiences.map((experience: any) =>
+          experience._id === updatedExperience._id
+            ? updatedExperience
+            : experience
+        )
+      );
+    });
+
+    socket.on("experience-deleted", (deletedExperienceId: string) => {
+      setExperience((prevExperiences: any) =>
+        prevExperiences.filter(
+          (experience: any) => experience._id !== deletedExperienceId
+        )
+      );
+    });
+
+    return () => {
+      socket.off("experience-created");
+      socket.off("experience-updated");
+      socket.off("experience-deleted");
+    };
   }, []);
 
   return (
@@ -29,13 +59,22 @@ const ExperienceAdminView = () => {
       <AddExperienceModal />
       <div className="flex flex-wrap gap-6 p-2">
         {experience?.map((item) => (
-          <>
-            <div key={item._id} className="flex flex-wrap gap-6 p-6">
+          <div key={item._id}>
+            <div className="flex flex-wrap gap-6 p-6">
               <ExperienceCard experience={item} />
+              <div className="flex gap-x-4">
+                {experience.length > 1 && (
+                  <>
+                    <EditExperienceModal
+                      projectId={item._id}
+                      initialData={item}
+                    />
+                    <DeleteExperience projectId={item._id} />
+                  </>
+                )}
+              </div>
             </div>
-            <EditExperienceModal projectId={item._id} initialData={item} />
-            <DeleteExperience projectId={item._id} />
-          </>
+          </div>
         ))}
       </div>
     </div>

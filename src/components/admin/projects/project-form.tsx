@@ -200,7 +200,7 @@ const ProjectForm = ({ isLoading, onSubmit, initialData }: Props) => {
           block
           className="h-10 font-semibold bg-[#9747FF] "
         >
-          {initialData ? "Update Project" : "Add Project"}
+          {initialData ? "Edit Project" : "Add Project"}
         </Button>
       </Form.Item>
     </Form>

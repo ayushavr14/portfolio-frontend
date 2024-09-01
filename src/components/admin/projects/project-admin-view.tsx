@@ -5,6 +5,7 @@ import AddProjectModal from "./add-project-modal";
 import DeleteProject from "./delete-project";
 import EditProjectModal from "./edit-project-modal";
 import ProjectCard from "./ProjectCard";
+import socket from "@/socket/socket";
 
 const ProjectAdminView = () => {
   const [projects, setProjects] = useState<ProjectT[] | null>(null);
@@ -12,14 +13,38 @@ const ProjectAdminView = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axiosInstance.get("/api/projects");
-        setProjects(res.data);
+        const response = await axiosInstance.get<ProjectT[]>("/api/projects");
+        setProjects(response.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching projects:", error);
       }
     };
 
     fetchProjects();
+
+    socket.on("project-created", (newProject: ProjectT) => {
+      setProjects((prevProjects) => [...prevProjects, newProject]);
+    });
+
+    socket.on("project-updated", (updatedProject: ProjectT) => {
+      setProjects((prevProjects: any) =>
+        prevProjects.map((project: any) =>
+          project._id === updatedProject._id ? updatedProject : project
+        )
+      );
+    });
+
+    socket.on("project-deleted", (deletedProjectId: string) => {
+      setProjects((prevProjects: any) =>
+        prevProjects.filter((project: any) => project._id !== deletedProjectId)
+      );
+    });
+
+    return () => {
+      socket.off("project-created");
+      socket.off("project-updated");
+      socket.off("project-deleted");
+    };
   }, []);
 
   return (
@@ -29,8 +54,12 @@ const ProjectAdminView = () => {
         {projects?.map((item) => (
           <div key={item._id} className="flex flex-wrap gap-6 p-6">
             <ProjectCard project={item} />
-            <EditProjectModal projectId={item._id} initialData={item} />
-            <DeleteProject projectId={item._id} />
+            {projects?.length > 1 && (
+              <>
+                <EditProjectModal projectId={item._id} initialData={item} />
+                <DeleteProject projectId={item._id} />
+              </>
+            )}
           </div>
         ))}
       </div>

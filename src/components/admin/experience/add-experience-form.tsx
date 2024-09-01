@@ -97,7 +97,7 @@ const AddExperienceForm = ({ isLoading, onSubmit, initialData }: Props) => {
                 block
                 className="h-10 font-semibold bg-[#9747FF] "
               >
-                Add Experience
+                {initialData ? "Edit Experience" : "Add Experience"}
               </Button>
             </Form.Item>
           </Form>

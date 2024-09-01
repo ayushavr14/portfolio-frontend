@@ -19,12 +19,9 @@ const EditExperienceModal = ({
   const handleSubmit = async (data: ExperienceT) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.patch(
-        `/api/experiences/${projectId}`,
-        data
-      );
+      await axiosInstance.patch(`/api/experiences/${projectId}`, data);
 
-      message.success(res.data?.msg);
+      message.success("Experience Edited Successfully");
     } catch (error) {
       console.error("Project addition failed:", error);
     } finally {
@@ -42,7 +39,7 @@ const EditExperienceModal = ({
         <MdModeEdit size={28} className="text-green-500" />
       </Button>
       <Modal
-        width="800px"
+        width="600px"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         title="Edit Experience"

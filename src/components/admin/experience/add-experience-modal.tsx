@@ -27,6 +27,7 @@ const AddExperienceModal = () => {
         Add Experiecne
       </Button>
       <Modal
+        width={600}
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         title="Add Experience"
