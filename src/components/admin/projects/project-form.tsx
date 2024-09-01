@@ -111,7 +111,6 @@ const ProjectForm = ({ isLoading, onSubmit, initialData }: Props) => {
         rules={[
           {
             required: true,
-            message: "Please enter technologies, separated by commas.",
           },
         ]}
       >

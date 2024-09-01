@@ -29,7 +29,7 @@ const AddExperienceModal = () => {
       <Modal
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
-        title="Add Project"
+        title="Add Experience"
         destroyOnClose
         footer={false}
       >

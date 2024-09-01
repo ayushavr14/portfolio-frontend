@@ -2,9 +2,9 @@ import axiosInstance from "@/axios/instance";
 import { ProjectT } from "@/lib/types";
 import { useEffect, useState } from "react";
 import AddProjectModal from "./add-project-modal";
+import DeleteProject from "./delete-project";
 import EditProjectModal from "./edit-project-modal";
 import ProjectCard from "./ProjectCard";
-import DeleteProject from "./delete-project";
 
 const ProjectAdminView = () => {
   const [projects, setProjects] = useState<ProjectT[] | null>(null);

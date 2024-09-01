@@ -14,7 +14,8 @@ const Login = () => {
     try {
       setIsLoading(true);
       const res = await axiosInstance.post("/api/auth/login", data);
-      navigate("/add-project");
+      navigate("/admin-panel");
+      sessionStorage.setItem("ssdd", res.data.token);
       message.success(res.data.msg);
     } catch (error: any) {
       message.error(error.response.data.message);

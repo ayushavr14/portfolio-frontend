@@ -1,42 +1,47 @@
-import { SkillsT } from "@/lib/types";
-import { Button, Form, Input, message } from "antd";
-import Wrapper from "../Wrapper";
 import axiosInstance from "@/axios/instance";
-import { useState } from "react";
+import { SkillsT } from "@/lib/types";
+import { Button, Form, message, Select } from "antd";
+import { useEffect, useState } from "react";
+import Wrapper from "../../Wrapper";
 
-const AddSkills = () => {
+const AddSkills = ({
+  skillsId,
+  initialData,
+}: {
+  skillsId: string;
+  initialData: SkillsT;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   const onSubmit = async (data: SkillsT) => {
     try {
       setIsLoading(true);
-      const skillsArray = data.name
-        .split(",")
-        .map((skill: string) => skill.trim())
-        .filter((skill: string) => skill);
 
-      const sendData = {
-        name: skillsArray,
-      };
+      await axiosInstance.patch(`/api/skills/${skillsId}`, data);
 
-      await axiosInstance.post("/api/skills", sendData);
-
-      message.success("Skills added successfully");
-
-      form.resetFields();
+      message.success("Skills updated successfully");
     } catch (error) {
-      console.error("Error adding skills:", error);
-      message.error("Failed to add skills");
+      console.error("Error updating skills:", error);
+      message.error("Failed to update skills");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (initialData) {
+      form.setFieldsValue({
+        ...initialData,
+      });
+    }
+  }, []);
+
   return (
     <Wrapper>
       <div className="w-full min-h-screen bg-gray-900 px-10 py-5 rounded-lg">
-        <h2 className="text-3xl text-white font-semibold">Add Skills</h2>
-        <div className=" bg-card w-full">
+        <h2 className="text-3xl text-white font-semibold">Update Skills</h2>
+        <div className="w-full">
           <Form
             form={form}
             onFinish={onSubmit}
@@ -49,11 +54,10 @@ const AddSkills = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please enter skills, separated by commas.",
                 },
               ]}
             >
-              <Input placeholder="Skills" className="h-10" />
+              <Select mode="tags" placeholder="Skills" className="" />
             </Form.Item>
 
             <Form.Item className="pt-5 w-[100px]">
@@ -65,7 +69,7 @@ const AddSkills = () => {
                 block
                 className="h-10 font-semibold bg-[#9747FF] "
               >
-                Add skills
+                Update skills
               </Button>
             </Form.Item>
           </Form>

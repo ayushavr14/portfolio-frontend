@@ -29,7 +29,8 @@ export type NormFileEventT = {
 };
 
 export type SkillsT = {
-  name: string;
+  _id: string;
+  name: string[];
 };
 
 export type ExperienceT = {
@@ -37,6 +38,15 @@ export type ExperienceT = {
   title: string;
   company: string;
   description: string;
-  startDate: Date | number;
+  startDate: Date;
   endDate: Date;
+};
+
+export type UserT = {
+  _id: string;
+  user: string;
+  about?: string;
+  cvLink?: string[];
+  githubLink?: string;
+  linkedinLink?: string;
 };

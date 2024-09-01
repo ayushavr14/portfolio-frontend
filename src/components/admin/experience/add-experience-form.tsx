@@ -1,7 +1,7 @@
-import { Button, Form, Input, message } from "antd";
-import { useEffect, useState } from "react";
-import Wrapper from "../../Wrapper";
 import { ExperienceT } from "@/lib/types";
+import { Button, Form, Input } from "antd";
+import { useEffect } from "react";
+import Wrapper from "../../Wrapper";
 
 type Props = {
   isLoading: boolean;
@@ -29,8 +29,7 @@ const AddExperienceForm = ({ isLoading, onSubmit, initialData }: Props) => {
   return (
     <Wrapper>
       <div className="w-full min-h-screen px-10 py-5 rounded-lg">
-        <h2 className="text-3xl text-white font-semibold">Add Experience</h2>
-        <div className=" bg-card w-full">
+        <div className="w-full">
           <Form
             form={form}
             onFinish={onFinish}
