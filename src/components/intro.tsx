@@ -112,11 +112,13 @@ export default function Intro() {
 
               <a
                 className="group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer borderBlack dark:bg-white/10"
-                href={item?.cvLink[0]}
+                href={
+                  item.cvLink && item.cvLink.length > 0 ? item.cvLink[0] : "#"
+                }
                 target="_blank"
                 download
               >
-                Download CV{" "}
+                View CV
                 <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
               </a>
 
@@ -142,7 +144,7 @@ export default function Intro() {
           <div className="flex justify-center items-center">
             <SectionDivider />
           </div>
-          <About about={item?.about} />
+          <About about={item.about || ""} />
         </div>
       ))}
     </>
