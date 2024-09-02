@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import useSkills from "@/hooks/useSkills";
 import { motion } from "framer-motion";
-import SectionHeading from "./section-heading";
 import { useSectionInView } from "../lib/hooks";
-import socket from "@/socket/socket";
-import axiosInstance from "@/axios/instance";
-import { SkillsT } from "@/lib/types";
+import SectionHeading from "./section-heading";
 
 const fadeInAnimationVariants = {
   initial: {
@@ -22,44 +19,7 @@ const fadeInAnimationVariants = {
 
 export default function Skills() {
   const { ref } = useSectionInView("Skills");
-  const [skillsData, setSkillsData] = useState<SkillsT[]>([]);
-
-  useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const response = await axiosInstance.get<SkillsT[]>("/api/skills");
-        setSkillsData(response.data);
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    };
-
-    fetchSkills();
-
-    socket.on("skill-added", (newSkill: SkillsT) => {
-      setSkillsData((prevSkills) => [...prevSkills, newSkill]);
-    });
-
-    socket.on("skill-updated", (updatedSkill: SkillsT) => {
-      setSkillsData((prevSkills) =>
-        prevSkills.map((skill) =>
-          skill._id === updatedSkill._id ? updatedSkill : skill
-        )
-      );
-    });
-
-    socket.on("skill-deleted", (deletedSkillId: string) => {
-      setSkillsData((prevSkills) =>
-        prevSkills.filter((skill) => skill._id !== deletedSkillId)
-      );
-    });
-
-    return () => {
-      socket.off("skill-added");
-      socket.off("skill-updated");
-      socket.off("skill-deleted");
-    };
-  }, []);
+  const skillsData = useSkills();
 
   return (
     <section

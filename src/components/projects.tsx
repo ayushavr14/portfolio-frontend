@@ -102,7 +102,7 @@ export default function Projects() {
   };
 
   return (
-    <section ref={ref} id="projects" className="scroll-mt-28 mb-28">
+    <section ref={ref} id="projects" className="scroll-mt-24 mb-28">
       <SectionHeading>My projects</SectionHeading>
 
       <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -133,8 +133,8 @@ export default function Projects() {
           className="border p-2 rounded-md text-black w-full md:w-auto"
         >
           <option value="">All Status</option>
-          <option value="Completed">Completed</option>
-          <option value="In progress">In progress</option>
+          <option value="completed">Completed</option>
+          <option value="inProgress">In progress</option>
         </select>
 
         <button

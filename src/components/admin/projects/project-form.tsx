@@ -188,7 +188,14 @@ const ProjectForm = ({ isLoading, onSubmit, initialData }: Props) => {
           },
         ]}
       >
-        <Input placeholder="Status" className="h-10" />
+        <Select
+          options={[
+            { label: "Completed", value: "completed" },
+            { label: "In Progress", value: "inProgress" },
+          ]}
+          placeholder="Status"
+          className="h-10"
+        />
       </Form.Item>
 
       <Form.Item className="pt-5 w-[100px]">

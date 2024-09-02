@@ -1,74 +1,17 @@
-import { useEffect, useState } from "react";
-import SectionHeading from "./section-heading";
+import useExperiences from "@/hooks/useExperience";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import socket from "@/socket/socket"; // Import the socket instance
-import { useSectionInView } from "../lib/hooks";
 import { useTheme } from "../context/theme-context";
-import axiosInstance from "@/axios/instance"; // Assuming you have a configured axios instance
-
-export interface ExperienceType {
-  _id: string;
-  title: string;
-  company: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
+import { useSectionInView } from "../lib/hooks";
+import SectionHeading from "./section-heading";
 
 export default function Experience() {
   const { ref } = useSectionInView("Experience");
   const { theme } = useTheme();
-  const [experiencesData, setExperiencesData] = useState<ExperienceType[]>([]);
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await axiosInstance.get<ExperienceType[]>(
-          "/api/experiences"
-        );
-        setExperiencesData(response?.data);
-      } catch (error) {
-        console.error("Error fetching experiences:", error);
-      }
-    };
-
-    fetchExperiences();
-
-    socket.on("experience-created", (newExperience: ExperienceType) => {
-      setExperiencesData((prevExperiences) => [
-        newExperience,
-        ...prevExperiences,
-      ]);
-    });
-
-    socket.on("experience-updated", (updatedExperience: ExperienceType) => {
-      setExperiencesData((prevExperiences) =>
-        prevExperiences.map((experience) =>
-          experience._id === updatedExperience._id
-            ? updatedExperience
-            : experience
-        )
-      );
-    });
-
-    socket.on("experience-deleted", (deletedExperienceId: string) => {
-      setExperiencesData((prevExperiences) =>
-        prevExperiences.filter(
-          (experience) => experience._id !== deletedExperienceId
-        )
-      );
-    });
-
-    return () => {
-      socket.off("experience-created");
-      socket.off("experience-updated");
-      socket.off("experience-deleted");
-    };
-  }, []);
+  const experiencesData = useExperiences();
 
   return (
     <section id="experience" ref={ref} className="scroll-mt-28 mb-28 sm:mb-40">

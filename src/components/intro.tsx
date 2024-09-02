@@ -1,47 +1,17 @@
+import useUserData from "@/hooks/useUserDetails";
 import { motion } from "framer-motion";
 import { BsArrowRight, BsLinkedin } from "react-icons/bs";
 import { FaGithubSquare } from "react-icons/fa";
 import { HiDownload } from "react-icons/hi";
 import { useActiveSectionContext } from "../context/active-section-context";
 import { useSectionInView } from "../lib/hooks";
-import { useEffect, useState } from "react";
-import axiosInstance from "@/axios/instance";
-import { UserT } from "@/lib/types";
-import socket from "@/socket/socket";
-import SectionDivider from "./section-divider";
 import About from "./about";
+import SectionDivider from "./section-divider";
 
 export default function Intro() {
-  const [userData, setUserData] = useState<UserT[]>([]);
   const { ref } = useSectionInView("Home", 0.5);
   const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await axiosInstance.get<UserT[]>(
-          "/api/auth/user-details"
-        );
-        setUserData(response?.data);
-      } catch (error) {
-        console.error("Error fetching experiences:", error);
-      }
-    };
-
-    fetchExperiences();
-
-    socket.on("user-updated", (updatedUser: UserT) => {
-      setUserData((prevUser) =>
-        prevUser.map((user) =>
-          user._id === updatedUser._id ? updatedUser : user
-        )
-      );
-    });
-
-    return () => {
-      socket.off("user-updated");
-    };
-  }, []);
+  const userData = useUserData();
 
   return (
     <>
