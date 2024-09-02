@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import ProfileForm from "./profile-form";
 import axiosInstance from "@/axios/instance";
-import { UserT } from "@/lib/types";
 
 const AdminProfile = () => {
-  const [userDetails, setUserDetails] = useState<UserT[]>();
+  const [userDetails, setUserDetails] = useState();
 
   useEffect(() => {
     const fetchUserDetails = async () => {

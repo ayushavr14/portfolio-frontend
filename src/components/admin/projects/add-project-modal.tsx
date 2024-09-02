@@ -16,11 +16,9 @@ const AddProjectModal = () => {
       });
 
       message.success(res.data?.msg);
-    } catch (error) {
-      if (error instanceof Error) {
-        message.error(error.response.data.msg);
-        console.error("Project addition failed:", error);
-      }
+    } catch (error: any) {
+      message.error(error.response.data.msg);
+      console.error("Project addition failed:", error);
     } finally {
       setIsLoading(false);
     }

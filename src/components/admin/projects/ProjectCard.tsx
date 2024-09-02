@@ -1,18 +1,8 @@
+import { ProjectT } from "@/lib/types";
 import React from "react";
 
-interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  demoLink: string;
-  sourceCodeLink: string;
-  image: string[];
-  tag: string;
-  status: string;
-}
-
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectT;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({

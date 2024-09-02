@@ -1,11 +1,22 @@
 import axiosInstance from "@/axios/instance";
-import { ProjectT } from "@/lib/types";
+import socket from "@/socket/socket";
 import { useEffect, useState } from "react";
 import AddProjectModal from "./add-project-modal";
 import DeleteProject from "./delete-project";
 import EditProjectModal from "./edit-project-modal";
 import ProjectCard from "./ProjectCard";
-import socket from "@/socket/socket";
+
+interface ProjectT {
+  _id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  demoLink: string;
+  sourceCodeLink?: string;
+  image: string[];
+  tag?: string;
+  status?: string;
+}
 
 const ProjectAdminView = () => {
   const [projects, setProjects] = useState<ProjectT[] | null>(null);
@@ -57,9 +68,9 @@ const ProjectAdminView = () => {
         {projects?.map((item) => (
           <div key={item._id} className="flex flex-wrap gap-6 p-6">
             <ProjectCard project={item} />
+            <EditProjectModal projectId={item._id} initialData={item} />
             {projects?.length > 1 && (
               <>
-                <EditProjectModal projectId={item._id} initialData={item} />
                 <DeleteProject projectId={item._id} />
               </>
             )}

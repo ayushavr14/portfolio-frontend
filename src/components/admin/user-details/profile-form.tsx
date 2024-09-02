@@ -5,14 +5,17 @@ import Wrapper from "../../Wrapper";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { UserT } from "@/lib/types";
 
-const ProfileForm = ({ initialData }: { initialData: UserT }) => {
+interface ProfileFormProps {
+  initialData?: UserT;
+}
+
+const ProfileForm = ({ initialData }: ProfileFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: any) => {
     try {
       setIsLoading(true);
       const { cvLink, ...restData } = data;
-      console.log(data);
 
       const formData = new FormData();
 
@@ -31,7 +34,7 @@ const ProfileForm = ({ initialData }: { initialData: UserT }) => {
       }
 
       await axiosInstance.patch(
-        `/api/auth/user-details/${initialData._id}`,
+        `/api/auth/user-details/${initialData?._id}`,
         formData,
         {
           headers: {
@@ -104,7 +107,7 @@ const ProfileForm = ({ initialData }: { initialData: UserT }) => {
 
             <Form.Item
               name="cvLink"
-              label="Cv"
+              label="Cv (Remove existing file then upload)"
               valuePropName="fileList"
               getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
               rules={[
@@ -114,7 +117,7 @@ const ProfileForm = ({ initialData }: { initialData: UserT }) => {
                 },
               ]}
             >
-              <Upload beforeUpload={() => false}>
+              <Upload beforeUpload={() => false} accept=".docx">
                 <Button icon={<MdOutlineFileUpload />}>Click to Upload</Button>
               </Upload>
             </Form.Item>

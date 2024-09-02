@@ -8,12 +8,12 @@ export type LoginT = {
 };
 
 export type ProjectT = {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   technologies: string[];
   demoLink: string;
-  sourceCodeLink: string;
+  sourceCodeLink?: string;
   image: string[];
   tag?: string;
   status?: string;
@@ -38,13 +38,13 @@ export type ExperienceT = {
   title: string;
   company: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 };
 
 export type UserT = {
-  _id: string;
-  user: string;
+  _id?: string;
+  user?: string;
   about?: string;
   cvLink?: string[];
   githubLink?: string;
